@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { colors } from "../../../../vars/palette";
 import get from "lodash/get";
 import { Row, Col } from "react-bootstrap";
 import { FaBath, FaBed } from "react-icons/fa";
+import { colors } from "../../../util/palette";
 
 export const baseUrl = "https://briggsamerican.com/map";
 

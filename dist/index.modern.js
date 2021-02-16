@@ -1,9 +1,1702 @@
-import React, { useRef, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import React, { useState } from 'react';
+import Img from 'gatsby-image';
+import { useStaticQuery, graphql } from 'gatsby';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Video } from 'wmk-lib';
+import styled from 'styled-components';
+import { ColorPalette } from 'wmk-color-palette';
+import 'react-icons/fa';
+
+function _taggedTemplateLiteralLoose(strings, raw) {
+  if (!raw) {
+    raw = strings.slice(0);
+  }
+
+  strings.raw = raw;
+  return strings;
+}
+
+var colors = new ColorPalette([{
+  value: "#F16724",
+  group: "orange",
+  primary: true
+}, {
+  value: "#595f67",
+  group: "black",
+  secondary: true
+}, {
+  value: "#d0d0d0",
+  group: "gray",
+  tertiary: true
+}, {
+  value: "#F16724",
+  group: "orange",
+  accent: true
+}, {
+  value: "#F16724",
+  group: "orange",
+  coaccent: true
+}, {
+  value: "#2f2f2f",
+  group: "black",
+  black: true
+}, {
+  value: "#2f2f2f",
+  group: "black",
+  text: true
+}, {
+  value: "#fcfcfc",
+  group: "white",
+  reverse: true
+}]);
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
+
+/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+
+var _freeGlobal = freeGlobal;
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = _freeGlobal || freeSelf || Function('return this')();
+
+var _root = root;
+
+/** Built-in value references. */
+var Symbol$1 = _root.Symbol;
+
+var _Symbol = Symbol$1;
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = _Symbol ? _Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+var _getRawTag = getRawTag;
+
+/** Used for built-in method references. */
+var objectProto$1 = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString$1 = objectProto$1.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString$1.call(value);
+}
+
+var _objectToString = objectToString;
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag$1 = _Symbol ? _Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag$1 && symToStringTag$1 in Object(value))
+    ? _getRawTag(value)
+    : _objectToString(value);
+}
+
+var _baseGetTag = baseGetTag;
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+var isObject_1 = isObject;
+
+/** `Object#toString` result references. */
+var asyncTag = '[object AsyncFunction]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    proxyTag = '[object Proxy]';
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  if (!isObject_1(value)) {
+    return false;
+  }
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+  var tag = _baseGetTag(value);
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+}
+
+var isFunction_1 = isFunction;
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = _root['__core-js_shared__'];
+
+var _coreJsData = coreJsData;
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(_coreJsData && _coreJsData.keys && _coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+var _isMasked = isMasked;
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to convert.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+var _toSource = toSource;
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used for built-in method references. */
+var funcProto$1 = Function.prototype,
+    objectProto$2 = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString$1 = funcProto$1.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty$1 = objectProto$2.hasOwnProperty;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString$1.call(hasOwnProperty$1).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject_1(value) || _isMasked(value)) {
+    return false;
+  }
+  var pattern = isFunction_1(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(_toSource(value));
+}
+
+var _baseIsNative = baseIsNative;
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+var _getValue = getValue;
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = _getValue(object, key);
+  return _baseIsNative(value) ? value : undefined;
+}
+
+var _getNative = getNative;
+
+/* Built-in method references that are verified to be native. */
+var nativeCreate = _getNative(Object, 'create');
+
+var _nativeCreate = nativeCreate;
+
+/**
+ * Removes all key-value entries from the hash.
+ *
+ * @private
+ * @name clear
+ * @memberOf Hash
+ */
+function hashClear() {
+  this.__data__ = _nativeCreate ? _nativeCreate(null) : {};
+  this.size = 0;
+}
+
+var _hashClear = hashClear;
+
+/**
+ * Removes `key` and its value from the hash.
+ *
+ * @private
+ * @name delete
+ * @memberOf Hash
+ * @param {Object} hash The hash to modify.
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function hashDelete(key) {
+  var result = this.has(key) && delete this.__data__[key];
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+var _hashDelete = hashDelete;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED = '__lodash_hash_undefined__';
+
+/** Used for built-in method references. */
+var objectProto$3 = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty$2 = objectProto$3.hasOwnProperty;
+
+/**
+ * Gets the hash value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf Hash
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function hashGet(key) {
+  var data = this.__data__;
+  if (_nativeCreate) {
+    var result = data[key];
+    return result === HASH_UNDEFINED ? undefined : result;
+  }
+  return hasOwnProperty$2.call(data, key) ? data[key] : undefined;
+}
+
+var _hashGet = hashGet;
+
+/** Used for built-in method references. */
+var objectProto$4 = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty$3 = objectProto$4.hasOwnProperty;
+
+/**
+ * Checks if a hash value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf Hash
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function hashHas(key) {
+  var data = this.__data__;
+  return _nativeCreate ? (data[key] !== undefined) : hasOwnProperty$3.call(data, key);
+}
+
+var _hashHas = hashHas;
+
+/** Used to stand-in for `undefined` hash values. */
+var HASH_UNDEFINED$1 = '__lodash_hash_undefined__';
+
+/**
+ * Sets the hash `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf Hash
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the hash instance.
+ */
+function hashSet(key, value) {
+  var data = this.__data__;
+  this.size += this.has(key) ? 0 : 1;
+  data[key] = (_nativeCreate && value === undefined) ? HASH_UNDEFINED$1 : value;
+  return this;
+}
+
+var _hashSet = hashSet;
+
+/**
+ * Creates a hash object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function Hash(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `Hash`.
+Hash.prototype.clear = _hashClear;
+Hash.prototype['delete'] = _hashDelete;
+Hash.prototype.get = _hashGet;
+Hash.prototype.has = _hashHas;
+Hash.prototype.set = _hashSet;
+
+var _Hash = Hash;
+
+/**
+ * Removes all key-value entries from the list cache.
+ *
+ * @private
+ * @name clear
+ * @memberOf ListCache
+ */
+function listCacheClear() {
+  this.__data__ = [];
+  this.size = 0;
+}
+
+var _listCacheClear = listCacheClear;
+
+/**
+ * Performs a
+ * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
+ * comparison between two values to determine if they are equivalent.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to compare.
+ * @param {*} other The other value to compare.
+ * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+ * @example
+ *
+ * var object = { 'a': 1 };
+ * var other = { 'a': 1 };
+ *
+ * _.eq(object, object);
+ * // => true
+ *
+ * _.eq(object, other);
+ * // => false
+ *
+ * _.eq('a', 'a');
+ * // => true
+ *
+ * _.eq('a', Object('a'));
+ * // => false
+ *
+ * _.eq(NaN, NaN);
+ * // => true
+ */
+function eq(value, other) {
+  return value === other || (value !== value && other !== other);
+}
+
+var eq_1 = eq;
+
+/**
+ * Gets the index at which the `key` is found in `array` of key-value pairs.
+ *
+ * @private
+ * @param {Array} array The array to inspect.
+ * @param {*} key The key to search for.
+ * @returns {number} Returns the index of the matched value, else `-1`.
+ */
+function assocIndexOf(array, key) {
+  var length = array.length;
+  while (length--) {
+    if (eq_1(array[length][0], key)) {
+      return length;
+    }
+  }
+  return -1;
+}
+
+var _assocIndexOf = assocIndexOf;
+
+/** Used for built-in method references. */
+var arrayProto = Array.prototype;
+
+/** Built-in value references. */
+var splice = arrayProto.splice;
+
+/**
+ * Removes `key` and its value from the list cache.
+ *
+ * @private
+ * @name delete
+ * @memberOf ListCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function listCacheDelete(key) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+
+  if (index < 0) {
+    return false;
+  }
+  var lastIndex = data.length - 1;
+  if (index == lastIndex) {
+    data.pop();
+  } else {
+    splice.call(data, index, 1);
+  }
+  --this.size;
+  return true;
+}
+
+var _listCacheDelete = listCacheDelete;
+
+/**
+ * Gets the list cache value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf ListCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function listCacheGet(key) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+
+  return index < 0 ? undefined : data[index][1];
+}
+
+var _listCacheGet = listCacheGet;
+
+/**
+ * Checks if a list cache value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf ListCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function listCacheHas(key) {
+  return _assocIndexOf(this.__data__, key) > -1;
+}
+
+var _listCacheHas = listCacheHas;
+
+/**
+ * Sets the list cache `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf ListCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the list cache instance.
+ */
+function listCacheSet(key, value) {
+  var data = this.__data__,
+      index = _assocIndexOf(data, key);
+
+  if (index < 0) {
+    ++this.size;
+    data.push([key, value]);
+  } else {
+    data[index][1] = value;
+  }
+  return this;
+}
+
+var _listCacheSet = listCacheSet;
+
+/**
+ * Creates an list cache object.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function ListCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `ListCache`.
+ListCache.prototype.clear = _listCacheClear;
+ListCache.prototype['delete'] = _listCacheDelete;
+ListCache.prototype.get = _listCacheGet;
+ListCache.prototype.has = _listCacheHas;
+ListCache.prototype.set = _listCacheSet;
+
+var _ListCache = ListCache;
+
+/* Built-in method references that are verified to be native. */
+var Map = _getNative(_root, 'Map');
+
+var _Map = Map;
+
+/**
+ * Removes all key-value entries from the map.
+ *
+ * @private
+ * @name clear
+ * @memberOf MapCache
+ */
+function mapCacheClear() {
+  this.size = 0;
+  this.__data__ = {
+    'hash': new _Hash,
+    'map': new (_Map || _ListCache),
+    'string': new _Hash
+  };
+}
+
+var _mapCacheClear = mapCacheClear;
+
+/**
+ * Checks if `value` is suitable for use as unique object key.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+ */
+function isKeyable(value) {
+  var type = typeof value;
+  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')
+    ? (value !== '__proto__')
+    : (value === null);
+}
+
+var _isKeyable = isKeyable;
+
+/**
+ * Gets the data for `map`.
+ *
+ * @private
+ * @param {Object} map The map to query.
+ * @param {string} key The reference key.
+ * @returns {*} Returns the map data.
+ */
+function getMapData(map, key) {
+  var data = map.__data__;
+  return _isKeyable(key)
+    ? data[typeof key == 'string' ? 'string' : 'hash']
+    : data.map;
+}
+
+var _getMapData = getMapData;
+
+/**
+ * Removes `key` and its value from the map.
+ *
+ * @private
+ * @name delete
+ * @memberOf MapCache
+ * @param {string} key The key of the value to remove.
+ * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+ */
+function mapCacheDelete(key) {
+  var result = _getMapData(this, key)['delete'](key);
+  this.size -= result ? 1 : 0;
+  return result;
+}
+
+var _mapCacheDelete = mapCacheDelete;
+
+/**
+ * Gets the map value for `key`.
+ *
+ * @private
+ * @name get
+ * @memberOf MapCache
+ * @param {string} key The key of the value to get.
+ * @returns {*} Returns the entry value.
+ */
+function mapCacheGet(key) {
+  return _getMapData(this, key).get(key);
+}
+
+var _mapCacheGet = mapCacheGet;
+
+/**
+ * Checks if a map value for `key` exists.
+ *
+ * @private
+ * @name has
+ * @memberOf MapCache
+ * @param {string} key The key of the entry to check.
+ * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+ */
+function mapCacheHas(key) {
+  return _getMapData(this, key).has(key);
+}
+
+var _mapCacheHas = mapCacheHas;
+
+/**
+ * Sets the map `key` to `value`.
+ *
+ * @private
+ * @name set
+ * @memberOf MapCache
+ * @param {string} key The key of the value to set.
+ * @param {*} value The value to set.
+ * @returns {Object} Returns the map cache instance.
+ */
+function mapCacheSet(key, value) {
+  var data = _getMapData(this, key),
+      size = data.size;
+
+  data.set(key, value);
+  this.size += data.size == size ? 0 : 1;
+  return this;
+}
+
+var _mapCacheSet = mapCacheSet;
+
+/**
+ * Creates a map cache object to store key-value pairs.
+ *
+ * @private
+ * @constructor
+ * @param {Array} [entries] The key-value pairs to cache.
+ */
+function MapCache(entries) {
+  var index = -1,
+      length = entries == null ? 0 : entries.length;
+
+  this.clear();
+  while (++index < length) {
+    var entry = entries[index];
+    this.set(entry[0], entry[1]);
+  }
+}
+
+// Add methods to `MapCache`.
+MapCache.prototype.clear = _mapCacheClear;
+MapCache.prototype['delete'] = _mapCacheDelete;
+MapCache.prototype.get = _mapCacheGet;
+MapCache.prototype.has = _mapCacheHas;
+MapCache.prototype.set = _mapCacheSet;
+
+var _MapCache = MapCache;
+
+/** Error message constants. */
+var FUNC_ERROR_TEXT = 'Expected a function';
+
+/**
+ * Creates a function that memoizes the result of `func`. If `resolver` is
+ * provided, it determines the cache key for storing the result based on the
+ * arguments provided to the memoized function. By default, the first argument
+ * provided to the memoized function is used as the map cache key. The `func`
+ * is invoked with the `this` binding of the memoized function.
+ *
+ * **Note:** The cache is exposed as the `cache` property on the memoized
+ * function. Its creation may be customized by replacing the `_.memoize.Cache`
+ * constructor with one whose instances implement the
+ * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
+ * method interface of `clear`, `delete`, `get`, `has`, and `set`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to have its output memoized.
+ * @param {Function} [resolver] The function to resolve the cache key.
+ * @returns {Function} Returns the new memoized function.
+ * @example
+ *
+ * var object = { 'a': 1, 'b': 2 };
+ * var other = { 'c': 3, 'd': 4 };
+ *
+ * var values = _.memoize(_.values);
+ * values(object);
+ * // => [1, 2]
+ *
+ * values(other);
+ * // => [3, 4]
+ *
+ * object.a = 2;
+ * values(object);
+ * // => [1, 2]
+ *
+ * // Modify the result cache.
+ * values.cache.set(object, ['a', 'b']);
+ * values(object);
+ * // => ['a', 'b']
+ *
+ * // Replace `_.memoize.Cache`.
+ * _.memoize.Cache = WeakMap;
+ */
+function memoize(func, resolver) {
+  if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {
+    throw new TypeError(FUNC_ERROR_TEXT);
+  }
+  var memoized = function() {
+    var args = arguments,
+        key = resolver ? resolver.apply(this, args) : args[0],
+        cache = memoized.cache;
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+    var result = func.apply(this, args);
+    memoized.cache = cache.set(key, result) || cache;
+    return result;
+  };
+  memoized.cache = new (memoize.Cache || _MapCache);
+  return memoized;
+}
+
+// Expose `MapCache`.
+memoize.Cache = _MapCache;
+
+var memoize_1 = memoize;
+
+/** Used as the maximum memoize cache size. */
+var MAX_MEMOIZE_SIZE = 500;
+
+/**
+ * A specialized version of `_.memoize` which clears the memoized function's
+ * cache when it exceeds `MAX_MEMOIZE_SIZE`.
+ *
+ * @private
+ * @param {Function} func The function to have its output memoized.
+ * @returns {Function} Returns the new memoized function.
+ */
+function memoizeCapped(func) {
+  var result = memoize_1(func, function(key) {
+    if (cache.size === MAX_MEMOIZE_SIZE) {
+      cache.clear();
+    }
+    return key;
+  });
+
+  var cache = result.cache;
+  return result;
+}
+
+var _memoizeCapped = memoizeCapped;
+
+/** Used to match property names within property paths. */
+var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+
+/** Used to match backslashes in property paths. */
+var reEscapeChar = /\\(\\)?/g;
+
+/**
+ * Converts `string` to a property path array.
+ *
+ * @private
+ * @param {string} string The string to convert.
+ * @returns {Array} Returns the property path array.
+ */
+var stringToPath = _memoizeCapped(function(string) {
+  var result = [];
+  if (string.charCodeAt(0) === 46 /* . */) {
+    result.push('');
+  }
+  string.replace(rePropName, function(match, number, quote, subString) {
+    result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));
+  });
+  return result;
+});
+
+var _templateObject, _templateObject2;
+var baseUrl = "https://briggsamerican.com/map";
+var StyledGrid = styled.div(_templateObject || (_templateObject = _taggedTemplateLiteralLoose(["\n  width: 100%;\n  height: 200px;\n  position: relative;\n  margin: 0.5rem;\n  overflow: hidden;\n  transition: all 0.3s ease;\n  .specs {\n    opacity: 0;\n    left: -50%;\n    transition: all 0.3s ease;\n  }\n  :hover {\n    box-shadow: 0px 3px 10px ", ";\n    transition: all 0.3s ease;\n    .specs {\n      opacity: 1;\n      left: 0;\n      transition: all 0.3s ease;\n      :hover {\n        cursor: pointer;\n      }\n    }\n  }\n"])), colors.rgba("black", 0.45));
+var MapSearchLink = styled.a(_templateObject2 || (_templateObject2 = _taggedTemplateLiteralLoose(["\n  position: absolute;\n  padding: 0.5rem;\n  background: black;\n  color: ", ";\n  :hover {\n    color: ", ";\n    text-decoration: none;\n  }\n  font-size: 0.8rem;\n  bottom: 0;\n"])), colors.hex("white"), colors.hover("tertiary"));
+
+var CityList = function CityList(_ref) {
+  var setActiveCity = _ref.setActiveCity;
+
+  var handleSelect = function handleSelect(e) {
+    setActiveCity(e.target.value);
+  };
+
+  return /*#__PURE__*/React.createElement(Form.Control, {
+    as: "select",
+    id: "quicksearch_City_list",
+    type: "list",
+    onChange: handleSelect
+  }, /*#__PURE__*/React.createElement("option", {
+    value: ""
+  }, "- Select a City-"), /*#__PURE__*/React.createElement("option", {
+    value: "Any"
+  }, "Any"), /*#__PURE__*/React.createElement("option", {
+    value: "Advance"
+  }, "Advance"), /*#__PURE__*/React.createElement("option", {
+    value: "Albemarle"
+  }, "Albemarle"), /*#__PURE__*/React.createElement("option", {
+    value: "Alexander"
+  }, "Alexander"), /*#__PURE__*/React.createElement("option", {
+    value: "Alexis"
+  }, "Alexis"), /*#__PURE__*/React.createElement("option", {
+    value: "Almond"
+  }, "Almond"), /*#__PURE__*/React.createElement("option", {
+    value: "Anderson"
+  }, "Anderson"), /*#__PURE__*/React.createElement("option", {
+    value: "Ansonville"
+  }, "Ansonville"), /*#__PURE__*/React.createElement("option", {
+    value: "Arden"
+  }, "Arden"), /*#__PURE__*/React.createElement("option", {
+    value: "Asheboro"
+  }, "Asheboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Asheville"
+  }, "Asheville"), /*#__PURE__*/React.createElement("option", {
+    value: "Badin"
+  }, "Badin"), /*#__PURE__*/React.createElement("option", {
+    value: "Badin Lake"
+  }, "Badin Lake"), /*#__PURE__*/React.createElement("option", {
+    value: "Bakersville"
+  }, "Bakersville"), /*#__PURE__*/React.createElement("option", {
+    value: "Balsam"
+  }, "Balsam"), /*#__PURE__*/React.createElement("option", {
+    value: "Balsam Grove"
+  }, "Balsam Grove"), /*#__PURE__*/React.createElement("option", {
+    value: "Banner Elk"
+  }, "Banner Elk"), /*#__PURE__*/React.createElement("option", {
+    value: "Barnardsville"
+  }, "Barnardsville"), /*#__PURE__*/React.createElement("option", {
+    value: "Bat Cave"
+  }, "Bat Cave"), /*#__PURE__*/React.createElement("option", {
+    value: "Beech Mountain"
+  }, "Beech Mountain"), /*#__PURE__*/React.createElement("option", {
+    value: "Belmont"
+  }, "Belmont"), /*#__PURE__*/React.createElement("option", {
+    value: "Bessemer City"
+  }, "Bessemer City"), /*#__PURE__*/React.createElement("option", {
+    value: "Bethune"
+  }, "Bethune"), /*#__PURE__*/React.createElement("option", {
+    value: "Biltmore Forest"
+  }, "Biltmore Forest"), /*#__PURE__*/React.createElement("option", {
+    value: "Biltmore Lake"
+  }, "Biltmore Lake"), /*#__PURE__*/React.createElement("option", {
+    value: "Biscoe"
+  }, "Biscoe"), /*#__PURE__*/React.createElement("option", {
+    value: "Black Mountain"
+  }, "Black Mountain"), /*#__PURE__*/React.createElement("option", {
+    value: "Blacksburg"
+  }, "Blacksburg"), /*#__PURE__*/React.createElement("option", {
+    value: "Blackstock"
+  }, "Blackstock"), /*#__PURE__*/React.createElement("option", {
+    value: "Blowing Rock"
+  }, "Blowing Rock"), /*#__PURE__*/React.createElement("option", {
+    value: "Blythewood"
+  }, "Blythewood"), /*#__PURE__*/React.createElement("option", {
+    value: "Boiling Springs"
+  }, "Boiling Springs"), /*#__PURE__*/React.createElement("option", {
+    value: "Boomer"
+  }, "Boomer"), /*#__PURE__*/React.createElement("option", {
+    value: "Boone"
+  }, "Boone"), /*#__PURE__*/React.createElement("option", {
+    value: "Boonville"
+  }, "Boonville"), /*#__PURE__*/React.createElement("option", {
+    value: "Bostic"
+  }, "Bostic"), /*#__PURE__*/React.createElement("option", {
+    value: "Brevard"
+  }, "Brevard"), /*#__PURE__*/React.createElement("option", {
+    value: "Bryson City"
+  }, "Bryson City"), /*#__PURE__*/React.createElement("option", {
+    value: "Burnsville"
+  }, "Burnsville"), /*#__PURE__*/React.createElement("option", {
+    value: "Camden"
+  }, "Camden"), /*#__PURE__*/React.createElement("option", {
+    value: "Campobello"
+  }, "Campobello"), /*#__PURE__*/React.createElement("option", {
+    value: "Candler"
+  }, "Candler"), /*#__PURE__*/React.createElement("option", {
+    value: "Candor"
+  }, "Candor"), /*#__PURE__*/React.createElement("option", {
+    value: "Canton"
+  }, "Canton"), /*#__PURE__*/React.createElement("option", {
+    value: "Casar"
+  }, "Casar"), /*#__PURE__*/React.createElement("option", {
+    value: "Cashiers"
+  }, "Cashiers"), /*#__PURE__*/React.createElement("option", {
+    value: "Cassatt"
+  }, "Cassatt"), /*#__PURE__*/React.createElement("option", {
+    value: "Catawba"
+  }, "Catawba"), /*#__PURE__*/React.createElement("option", {
+    value: "Cedar Mountain"
+  }, "Cedar Mountain"), /*#__PURE__*/React.createElement("option", {
+    value: "Chapel Hill"
+  }, "Chapel Hill"), /*#__PURE__*/React.createElement("option", {
+    value: "Charlotte"
+  }, "Charlotte"), /*#__PURE__*/React.createElement("option", {
+    value: "Cheraw"
+  }, "Cheraw"), /*#__PURE__*/React.createElement("option", {
+    value: "Cherokee"
+  }, "Cherokee"), /*#__PURE__*/React.createElement("option", {
+    value: "Cherryville"
+  }, "Cherryville"), /*#__PURE__*/React.createElement("option", {
+    value: "Chesnee"
+  }, "Chesnee"), /*#__PURE__*/React.createElement("option", {
+    value: "Chester"
+  }, "Chester"), /*#__PURE__*/React.createElement("option", {
+    value: "Chesterfield"
+  }, "Chesterfield"), /*#__PURE__*/React.createElement("option", {
+    value: "Chimney Rock"
+  }, "Chimney Rock"), /*#__PURE__*/React.createElement("option", {
+    value: "China Grove"
+  }, "China Grove"), /*#__PURE__*/React.createElement("option", {
+    value: "Claremont"
+  }, "Claremont"), /*#__PURE__*/React.createElement("option", {
+    value: "Clemmons"
+  }, "Clemmons"), /*#__PURE__*/React.createElement("option", {
+    value: "Cleveland"
+  }, "Cleveland"), /*#__PURE__*/React.createElement("option", {
+    value: "Clover"
+  }, "Clover"), /*#__PURE__*/React.createElement("option", {
+    value: "Clyde"
+  }, "Clyde"), /*#__PURE__*/React.createElement("option", {
+    value: "Collettsville"
+  }, "Collettsville"), /*#__PURE__*/React.createElement("option", {
+    value: "Columbia"
+  }, "Columbia"), /*#__PURE__*/React.createElement("option", {
+    value: "Columbus"
+  }, "Columbus"), /*#__PURE__*/React.createElement("option", {
+    value: "Concord"
+  }, "Concord"), /*#__PURE__*/React.createElement("option", {
+    value: "Connelly Springs"
+  }, "Connelly Springs"), /*#__PURE__*/React.createElement("option", {
+    value: "Conover"
+  }, "Conover"), /*#__PURE__*/React.createElement("option", {
+    value: "Cooleemee"
+  }, "Cooleemee"), /*#__PURE__*/React.createElement("option", {
+    value: "Cornelius"
+  }, "Cornelius"), /*#__PURE__*/React.createElement("option", {
+    value: "Cramerton"
+  }, "Cramerton"), /*#__PURE__*/React.createElement("option", {
+    value: "Crouse"
+  }, "Crouse"), /*#__PURE__*/React.createElement("option", {
+    value: "Cullowhee"
+  }, "Cullowhee"), /*#__PURE__*/React.createElement("option", {
+    value: "Dallas"
+  }, "Dallas"), /*#__PURE__*/React.createElement("option", {
+    value: "Davidson"
+  }, "Davidson"), /*#__PURE__*/React.createElement("option", {
+    value: "Deep Gap"
+  }, "Deep Gap"), /*#__PURE__*/React.createElement("option", {
+    value: "Denton"
+  }, "Denton"), /*#__PURE__*/React.createElement("option", {
+    value: "Denver"
+  }, "Denver"), /*#__PURE__*/React.createElement("option", {
+    value: "Dillsboro"
+  }, "Dillsboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Dobson"
+  }, "Dobson"), /*#__PURE__*/React.createElement("option", {
+    value: "Drexel"
+  }, "Drexel"), /*#__PURE__*/React.createElement("option", {
+    value: "Durham"
+  }, "Durham"), /*#__PURE__*/React.createElement("option", {
+    value: "East Bend"
+  }, "East Bend"), /*#__PURE__*/React.createElement("option", {
+    value: "East Flat Rock"
+  }, "East Flat Rock"), /*#__PURE__*/React.createElement("option", {
+    value: "East Spencer"
+  }, "East Spencer"), /*#__PURE__*/React.createElement("option", {
+    value: "Edgemoor"
+  }, "Edgemoor"), /*#__PURE__*/React.createElement("option", {
+    value: "Edneyville"
+  }, "Edneyville"), /*#__PURE__*/React.createElement("option", {
+    value: "Elgin"
+  }, "Elgin"), /*#__PURE__*/React.createElement("option", {
+    value: "Elk Park"
+  }, "Elk Park"), /*#__PURE__*/React.createElement("option", {
+    value: "Elkin"
+  }, "Elkin"), /*#__PURE__*/React.createElement("option", {
+    value: "Ellenboro"
+  }, "Ellenboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Ellerbe"
+  }, "Ellerbe"), /*#__PURE__*/React.createElement("option", {
+    value: "Etowah"
+  }, "Etowah"), /*#__PURE__*/React.createElement("option", {
+    value: "Fairview"
+  }, "Fairview"), /*#__PURE__*/React.createElement("option", {
+    value: "Faith"
+  }, "Faith"), /*#__PURE__*/React.createElement("option", {
+    value: "Fallston"
+  }, "Fallston"), /*#__PURE__*/React.createElement("option", {
+    value: "Fayetteville"
+  }, "Fayetteville"), /*#__PURE__*/React.createElement("option", {
+    value: "Ferguson"
+  }, "Ferguson"), /*#__PURE__*/React.createElement("option", {
+    value: "Flat Rock"
+  }, "Flat Rock"), /*#__PURE__*/React.createElement("option", {
+    value: "Fleetwood"
+  }, "Fleetwood"), /*#__PURE__*/React.createElement("option", {
+    value: "Fletcher"
+  }, "Fletcher"), /*#__PURE__*/React.createElement("option", {
+    value: "Forest City"
+  }, "Forest City"), /*#__PURE__*/React.createElement("option", {
+    value: "Fort Lawn"
+  }, "Fort Lawn"), /*#__PURE__*/React.createElement("option", {
+    value: "Fort Mill"
+  }, "Fort Mill"), /*#__PURE__*/React.createElement("option", {
+    value: "Franklin"
+  }, "Franklin"), /*#__PURE__*/React.createElement("option", {
+    value: "Gaffney"
+  }, "Gaffney"), /*#__PURE__*/React.createElement("option", {
+    value: "Gaston"
+  }, "Gaston"), /*#__PURE__*/React.createElement("option", {
+    value: "Gastonia"
+  }, "Gastonia"), /*#__PURE__*/React.createElement("option", {
+    value: "Gerton"
+  }, "Gerton"), /*#__PURE__*/React.createElement("option", {
+    value: "Gilbert"
+  }, "Gilbert"), /*#__PURE__*/React.createElement("option", {
+    value: "Glen Alpine"
+  }, "Glen Alpine"), /*#__PURE__*/React.createElement("option", {
+    value: "Glenville"
+  }, "Glenville"), /*#__PURE__*/React.createElement("option", {
+    value: "Gold Hill"
+  }, "Gold Hill"), /*#__PURE__*/React.createElement("option", {
+    value: "Granite Falls"
+  }, "Granite Falls"), /*#__PURE__*/React.createElement("option", {
+    value: "Granite Quarry"
+  }, "Granite Quarry"), /*#__PURE__*/React.createElement("option", {
+    value: "Grassy Creek"
+  }, "Grassy Creek"), /*#__PURE__*/React.createElement("option", {
+    value: "Great Falls"
+  }, "Great Falls"), /*#__PURE__*/React.createElement("option", {
+    value: "Green Mountain"
+  }, "Green Mountain"), /*#__PURE__*/React.createElement("option", {
+    value: "Greensboro"
+  }, "Greensboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Greenville"
+  }, "Greenville"), /*#__PURE__*/React.createElement("option", {
+    value: "Grover"
+  }, "Grover"), /*#__PURE__*/React.createElement("option", {
+    value: "Hamlet"
+  }, "Hamlet"), /*#__PURE__*/React.createElement("option", {
+    value: "Hamptonville"
+  }, "Hamptonville"), /*#__PURE__*/React.createElement("option", {
+    value: "Harmony"
+  }, "Harmony"), /*#__PURE__*/React.createElement("option", {
+    value: "Harrisburg"
+  }, "Harrisburg"), /*#__PURE__*/React.createElement("option", {
+    value: "Hayesville"
+  }, "Hayesville"), /*#__PURE__*/React.createElement("option", {
+    value: "Hays"
+  }, "Hays"), /*#__PURE__*/React.createElement("option", {
+    value: "Heath Springs"
+  }, "Heath Springs"), /*#__PURE__*/React.createElement("option", {
+    value: "Hemby Bridge"
+  }, "Hemby Bridge"), /*#__PURE__*/React.createElement("option", {
+    value: "Hendersonville"
+  }, "Hendersonville"), /*#__PURE__*/React.createElement("option", {
+    value: "Hickory"
+  }, "Hickory"), /*#__PURE__*/React.createElement("option", {
+    value: "Hickory Grove"
+  }, "Hickory Grove"), /*#__PURE__*/React.createElement("option", {
+    value: "Hiddenite"
+  }, "Hiddenite"), /*#__PURE__*/React.createElement("option", {
+    value: "High Point"
+  }, "High Point"), /*#__PURE__*/React.createElement("option", {
+    value: "High Shoals"
+  }, "High Shoals"), /*#__PURE__*/React.createElement("option", {
+    value: "Highlands"
+  }, "Highlands"), /*#__PURE__*/React.createElement("option", {
+    value: "Hildebran"
+  }, "Hildebran"), /*#__PURE__*/React.createElement("option", {
+    value: "Horse Shoe"
+  }, "Horse Shoe"), /*#__PURE__*/React.createElement("option", {
+    value: "Hot Springs"
+  }, "Hot Springs"), /*#__PURE__*/React.createElement("option", {
+    value: "Hudson"
+  }, "Hudson"), /*#__PURE__*/React.createElement("option", {
+    value: "Huntersville"
+  }, "Huntersville"), /*#__PURE__*/React.createElement("option", {
+    value: "Indian Land"
+  }, "Indian Land"), /*#__PURE__*/React.createElement("option", {
+    value: "Indian Trail"
+  }, "Indian Trail"), /*#__PURE__*/React.createElement("option", {
+    value: "Inman"
+  }, "Inman"), /*#__PURE__*/React.createElement("option", {
+    value: "Iron Station"
+  }, "Iron Station"), /*#__PURE__*/React.createElement("option", {
+    value: "Ironton Township"
+  }, "Ironton Township"), /*#__PURE__*/React.createElement("option", {
+    value: "Jefferson"
+  }, "Jefferson"), /*#__PURE__*/React.createElement("option", {
+    value: "Jonesville"
+  }, "Jonesville"), /*#__PURE__*/React.createElement("option", {
+    value: "Kannapolis"
+  }, "Kannapolis"), /*#__PURE__*/React.createElement("option", {
+    value: "Kernersville"
+  }, "Kernersville"), /*#__PURE__*/React.createElement("option", {
+    value: "Kershaw"
+  }, "Kershaw"), /*#__PURE__*/React.createElement("option", {
+    value: "King"
+  }, "King"), /*#__PURE__*/React.createElement("option", {
+    value: "Kings Mountain"
+  }, "Kings Mountain"), /*#__PURE__*/React.createElement("option", {
+    value: "Lake Junaluska"
+  }, "Lake Junaluska"), /*#__PURE__*/React.createElement("option", {
+    value: "Lake Lure"
+  }, "Lake Lure"), /*#__PURE__*/React.createElement("option", {
+    value: "Lake Toxaway"
+  }, "Lake Toxaway"), /*#__PURE__*/React.createElement("option", {
+    value: "Lake Wylie"
+  }, "Lake Wylie"), /*#__PURE__*/React.createElement("option", {
+    value: "Lancaster"
+  }, "Lancaster"), /*#__PURE__*/React.createElement("option", {
+    value: "Landis"
+  }, "Landis"), /*#__PURE__*/React.createElement("option", {
+    value: "Landrum"
+  }, "Landrum"), /*#__PURE__*/React.createElement("option", {
+    value: "Lansing"
+  }, "Lansing"), /*#__PURE__*/React.createElement("option", {
+    value: "Laurel Park"
+  }, "Laurel Park"), /*#__PURE__*/React.createElement("option", {
+    value: "Laurel Springs"
+  }, "Laurel Springs"), /*#__PURE__*/React.createElement("option", {
+    value: "Laurinburg"
+  }, "Laurinburg"), /*#__PURE__*/React.createElement("option", {
+    value: "Lawndale"
+  }, "Lawndale"), /*#__PURE__*/React.createElement("option", {
+    value: "Leesville"
+  }, "Leesville"), /*#__PURE__*/React.createElement("option", {
+    value: "Leicester"
+  }, "Leicester"), /*#__PURE__*/React.createElement("option", {
+    value: "Lenoir"
+  }, "Lenoir"), /*#__PURE__*/React.createElement("option", {
+    value: "Lewisville"
+  }, "Lewisville"), /*#__PURE__*/React.createElement("option", {
+    value: "Lexington"
+  }, "Lexington"), /*#__PURE__*/React.createElement("option", {
+    value: "Liberty Hill"
+  }, "Liberty Hill"), /*#__PURE__*/React.createElement("option", {
+    value: "Lilesville"
+  }, "Lilesville"), /*#__PURE__*/React.createElement("option", {
+    value: "Lincolnton"
+  }, "Lincolnton"), /*#__PURE__*/React.createElement("option", {
+    value: "Linville"
+  }, "Linville"), /*#__PURE__*/React.createElement("option", {
+    value: "Linwood"
+  }, "Linwood"), /*#__PURE__*/React.createElement("option", {
+    value: "Little Switzerland"
+  }, "Little Switzerland"), /*#__PURE__*/React.createElement("option", {
+    value: "Locust"
+  }, "Locust"), /*#__PURE__*/React.createElement("option", {
+    value: "Loris"
+  }, "Loris"), /*#__PURE__*/React.createElement("option", {
+    value: "Lowell"
+  }, "Lowell"), /*#__PURE__*/React.createElement("option", {
+    value: "Lugoff"
+  }, "Lugoff"), /*#__PURE__*/React.createElement("option", {
+    value: "Maggie Valley"
+  }, "Maggie Valley"), /*#__PURE__*/React.createElement("option", {
+    value: "Maiden"
+  }, "Maiden"), /*#__PURE__*/React.createElement("option", {
+    value: "Marion"
+  }, "Marion"), /*#__PURE__*/React.createElement("option", {
+    value: "Mars Hill"
+  }, "Mars Hill"), /*#__PURE__*/React.createElement("option", {
+    value: "Marshall"
+  }, "Marshall"), /*#__PURE__*/React.createElement("option", {
+    value: "Marshville"
+  }, "Marshville"), /*#__PURE__*/React.createElement("option", {
+    value: "Marvin"
+  }, "Marvin"), /*#__PURE__*/React.createElement("option", {
+    value: "Matthews"
+  }, "Matthews"), /*#__PURE__*/React.createElement("option", {
+    value: "McAdenville"
+  }, "McAdenville"), /*#__PURE__*/React.createElement("option", {
+    value: "McConnells"
+  }, "McConnells"), /*#__PURE__*/React.createElement("option", {
+    value: "McGrady"
+  }, "McGrady"), /*#__PURE__*/React.createElement("option", {
+    value: "Mebane"
+  }, "Mebane"), /*#__PURE__*/React.createElement("option", {
+    value: "Midland"
+  }, "Midland"), /*#__PURE__*/React.createElement("option", {
+    value: "Mill Spring"
+  }, "Mill Spring"), /*#__PURE__*/React.createElement("option", {
+    value: "Millers Creek"
+  }, "Millers Creek"), /*#__PURE__*/React.createElement("option", {
+    value: "Mills River"
+  }, "Mills River"), /*#__PURE__*/React.createElement("option", {
+    value: "Mineral Springs"
+  }, "Mineral Springs"), /*#__PURE__*/React.createElement("option", {
+    value: "Mint Hill"
+  }, "Mint Hill"), /*#__PURE__*/React.createElement("option", {
+    value: "Misenheimer"
+  }, "Misenheimer"), /*#__PURE__*/React.createElement("option", {
+    value: "Mocksville"
+  }, "Mocksville"), /*#__PURE__*/React.createElement("option", {
+    value: "Monroe"
+  }, "Monroe"), /*#__PURE__*/React.createElement("option", {
+    value: "Montreat"
+  }, "Montreat"), /*#__PURE__*/React.createElement("option", {
+    value: "Mooresboro"
+  }, "Mooresboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Mooresville"
+  }, "Mooresville"), /*#__PURE__*/React.createElement("option", {
+    value: "Moravian Falls"
+  }, "Moravian Falls"), /*#__PURE__*/React.createElement("option", {
+    value: "Morganton"
+  }, "Morganton"), /*#__PURE__*/React.createElement("option", {
+    value: "Morven"
+  }, "Morven"), /*#__PURE__*/React.createElement("option", {
+    value: "Mount Airy"
+  }, "Mount Airy"), /*#__PURE__*/React.createElement("option", {
+    value: "Mount Croghan"
+  }, "Mount Croghan"), /*#__PURE__*/React.createElement("option", {
+    value: "Mount Gilead"
+  }, "Mount Gilead"), /*#__PURE__*/React.createElement("option", {
+    value: "Mount Holly"
+  }, "Mount Holly"), /*#__PURE__*/React.createElement("option", {
+    value: "Mount Pleasant"
+  }, "Mount Pleasant"), /*#__PURE__*/React.createElement("option", {
+    value: "Mount Ulla"
+  }, "Mount Ulla"), /*#__PURE__*/React.createElement("option", {
+    value: "Mountain Home"
+  }, "Mountain Home"), /*#__PURE__*/React.createElement("option", {
+    value: "Mt Ulla"
+  }, "Mt Ulla"), /*#__PURE__*/React.createElement("option", {
+    value: "Murphy"
+  }, "Murphy"), /*#__PURE__*/React.createElement("option", {
+    value: "N Wilkesboro"
+  }, "N Wilkesboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Nebo"
+  }, "Nebo"), /*#__PURE__*/React.createElement("option", {
+    value: "New London"
+  }, "New London"), /*#__PURE__*/React.createElement("option", {
+    value: "Newland"
+  }, "Newland"), /*#__PURE__*/React.createElement("option", {
+    value: "Newton"
+  }, "Newton"), /*#__PURE__*/React.createElement("option", {
+    value: "North Wilkesboro"
+  }, "North Wilkesboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Norwood"
+  }, "Norwood"), /*#__PURE__*/React.createElement("option", {
+    value: "Oakboro"
+  }, "Oakboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Ocean Isle"
+  }, "Ocean Isle"), /*#__PURE__*/React.createElement("option", {
+    value: "Old Fort"
+  }, "Old Fort"), /*#__PURE__*/React.createElement("option", {
+    value: "Olin"
+  }, "Olin"), /*#__PURE__*/React.createElement("option", {
+    value: "Pageland"
+  }, "Pageland"), /*#__PURE__*/React.createElement("option", {
+    value: "Patterson"
+  }, "Patterson"), /*#__PURE__*/React.createElement("option", {
+    value: "Peachland"
+  }, "Peachland"), /*#__PURE__*/React.createElement("option", {
+    value: "Penrose"
+  }, "Penrose"), /*#__PURE__*/React.createElement("option", {
+    value: "Pfafftown"
+  }, "Pfafftown"), /*#__PURE__*/React.createElement("option", {
+    value: "Pineville"
+  }, "Pineville"), /*#__PURE__*/React.createElement("option", {
+    value: "Pisgah Forest"
+  }, "Pisgah Forest"), /*#__PURE__*/React.createElement("option", {
+    value: "Polkton"
+  }, "Polkton"), /*#__PURE__*/React.createElement("option", {
+    value: "Purlear"
+  }, "Purlear"), /*#__PURE__*/React.createElement("option", {
+    value: "Qualla"
+  }, "Qualla"), /*#__PURE__*/React.createElement("option", {
+    value: "Raleigh"
+  }, "Raleigh"), /*#__PURE__*/React.createElement("option", {
+    value: "Ranlo"
+  }, "Ranlo"), /*#__PURE__*/React.createElement("option", {
+    value: "Rhodhiss"
+  }, "Rhodhiss"), /*#__PURE__*/React.createElement("option", {
+    value: "Richburg"
+  }, "Richburg"), /*#__PURE__*/React.createElement("option", {
+    value: "Richfield"
+  }, "Richfield"), /*#__PURE__*/React.createElement("option", {
+    value: "Robbinsville"
+  }, "Robbinsville"), /*#__PURE__*/React.createElement("option", {
+    value: "Rock Hill"
+  }, "Rock Hill"), /*#__PURE__*/React.createElement("option", {
+    value: "Rockingham"
+  }, "Rockingham"), /*#__PURE__*/React.createElement("option", {
+    value: "Rockwell"
+  }, "Rockwell"), /*#__PURE__*/React.createElement("option", {
+    value: "Ronda"
+  }, "Ronda"), /*#__PURE__*/React.createElement("option", {
+    value: "Rosman"
+  }, "Rosman"), /*#__PURE__*/React.createElement("option", {
+    value: "Ruby"
+  }, "Ruby"), /*#__PURE__*/React.createElement("option", {
+    value: "Rural Hall"
+  }, "Rural Hall"), /*#__PURE__*/React.createElement("option", {
+    value: "Rutherford College"
+  }, "Rutherford College"), /*#__PURE__*/React.createElement("option", {
+    value: "Rutherfordton"
+  }, "Rutherfordton"), /*#__PURE__*/React.createElement("option", {
+    value: "Salisbury"
+  }, "Salisbury"), /*#__PURE__*/React.createElement("option", {
+    value: "Saluda"
+  }, "Saluda"), /*#__PURE__*/React.createElement("option", {
+    value: "Sapphire"
+  }, "Sapphire"), /*#__PURE__*/React.createElement("option", {
+    value: "Sharon"
+  }, "Sharon"), /*#__PURE__*/React.createElement("option", {
+    value: "Shelby"
+  }, "Shelby"), /*#__PURE__*/React.createElement("option", {
+    value: "Sherrills Ford"
+  }, "Sherrills Ford"), /*#__PURE__*/React.createElement("option", {
+    value: "Siler City"
+  }, "Siler City"), /*#__PURE__*/React.createElement("option", {
+    value: "Smyrna"
+  }, "Smyrna"), /*#__PURE__*/React.createElement("option", {
+    value: "Spartanburg"
+  }, "Spartanburg"), /*#__PURE__*/React.createElement("option", {
+    value: "Spencer"
+  }, "Spencer"), /*#__PURE__*/React.createElement("option", {
+    value: "Spindale"
+  }, "Spindale"), /*#__PURE__*/React.createElement("option", {
+    value: "Spruce Pine"
+  }, "Spruce Pine"), /*#__PURE__*/React.createElement("option", {
+    value: "Stallings"
+  }, "Stallings"), /*#__PURE__*/React.createElement("option", {
+    value: "Stanfield"
+  }, "Stanfield"), /*#__PURE__*/React.createElement("option", {
+    value: "Stanley"
+  }, "Stanley"), /*#__PURE__*/React.createElement("option", {
+    value: "Star"
+  }, "Star"), /*#__PURE__*/React.createElement("option", {
+    value: "State Road"
+  }, "State Road"), /*#__PURE__*/React.createElement("option", {
+    value: "Statesville"
+  }, "Statesville"), /*#__PURE__*/React.createElement("option", {
+    value: "Stony Point"
+  }, "Stony Point"), /*#__PURE__*/React.createElement("option", {
+    value: "Sugar Grove"
+  }, "Sugar Grove"), /*#__PURE__*/React.createElement("option", {
+    value: "Sugar Mountain"
+  }, "Sugar Mountain"), /*#__PURE__*/React.createElement("option", {
+    value: "Sumter"
+  }, "Sumter"), /*#__PURE__*/React.createElement("option", {
+    value: "Swannanoa"
+  }, "Swannanoa"), /*#__PURE__*/React.createElement("option", {
+    value: "Sylva"
+  }, "Sylva"), /*#__PURE__*/React.createElement("option", {
+    value: "Taylorsville"
+  }, "Taylorsville"), /*#__PURE__*/React.createElement("option", {
+    value: "Tega Cay"
+  }, "Tega Cay"), /*#__PURE__*/React.createElement("option", {
+    value: "Terrell"
+  }, "Terrell"), /*#__PURE__*/React.createElement("option", {
+    value: "Thomasville"
+  }, "Thomasville"), /*#__PURE__*/React.createElement("option", {
+    value: "Thurmond"
+  }, "Thurmond"), /*#__PURE__*/React.createElement("option", {
+    value: "Todd"
+  }, "Todd"), /*#__PURE__*/React.createElement("option", {
+    value: "Topton"
+  }, "Topton"), /*#__PURE__*/React.createElement("option", {
+    value: "Traphill"
+  }, "Traphill"), /*#__PURE__*/React.createElement("option", {
+    value: "Travelers Rest"
+  }, "Travelers Rest"), /*#__PURE__*/React.createElement("option", {
+    value: "Troutman"
+  }, "Troutman"), /*#__PURE__*/React.createElement("option", {
+    value: "Troy"
+  }, "Troy"), /*#__PURE__*/React.createElement("option", {
+    value: "Tryon"
+  }, "Tryon"), /*#__PURE__*/React.createElement("option", {
+    value: "Tuckasegee"
+  }, "Tuckasegee"), /*#__PURE__*/React.createElement("option", {
+    value: "Union"
+  }, "Union"), /*#__PURE__*/React.createElement("option", {
+    value: "Union Grove"
+  }, "Union Grove"), /*#__PURE__*/React.createElement("option", {
+    value: "Union Mills"
+  }, "Union Mills"), /*#__PURE__*/React.createElement("option", {
+    value: "Valdese"
+  }, "Valdese"), /*#__PURE__*/React.createElement("option", {
+    value: "Vale"
+  }, "Vale"), /*#__PURE__*/React.createElement("option", {
+    value: "Van Wyck"
+  }, "Van Wyck"), /*#__PURE__*/React.createElement("option", {
+    value: "Vilas"
+  }, "Vilas"), /*#__PURE__*/React.createElement("option", {
+    value: "Waco"
+  }, "Waco"), /*#__PURE__*/React.createElement("option", {
+    value: "Wadesboro"
+  }, "Wadesboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Waxhaw"
+  }, "Waxhaw"), /*#__PURE__*/React.createElement("option", {
+    value: "Waynesville"
+  }, "Waynesville"), /*#__PURE__*/React.createElement("option", {
+    value: "Weaverville"
+  }, "Weaverville"), /*#__PURE__*/React.createElement("option", {
+    value: "Webster"
+  }, "Webster"), /*#__PURE__*/React.createElement("option", {
+    value: "Weddington"
+  }, "Weddington"), /*#__PURE__*/React.createElement("option", {
+    value: "Wellford"
+  }, "Wellford"), /*#__PURE__*/React.createElement("option", {
+    value: "Wesley Chapel"
+  }, "Wesley Chapel"), /*#__PURE__*/React.createElement("option", {
+    value: "West Jefferson"
+  }, "West Jefferson"), /*#__PURE__*/React.createElement("option", {
+    value: "Whittier"
+  }, "Whittier"), /*#__PURE__*/React.createElement("option", {
+    value: "Wilkesboro"
+  }, "Wilkesboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Wilmington"
+  }, "Wilmington"), /*#__PURE__*/React.createElement("option", {
+    value: "Wingate"
+  }, "Wingate"), /*#__PURE__*/React.createElement("option", {
+    value: "Winnsboro"
+  }, "Winnsboro"), /*#__PURE__*/React.createElement("option", {
+    value: "Winston Salem"
+  }, "Winston Salem"), /*#__PURE__*/React.createElement("option", {
+    value: "Woodfin"
+  }, "Woodfin"), /*#__PURE__*/React.createElement("option", {
+    value: "Woodleaf"
+  }, "Woodleaf"), /*#__PURE__*/React.createElement("option", {
+    value: "Yadkinville"
+  }, "Yadkinville"), /*#__PURE__*/React.createElement("option", {
+    value: "York"
+  }, "York"), /*#__PURE__*/React.createElement("option", {
+    value: "Zirconia"
+  }, "Zirconia"));
+};
+
+var _templateObject$1;
+var ButtonWrap = styled(Button)(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  background-color: ", ";\n  border-color: ", ";\n  padding: 5px 30px;\n  &:hover {\n    background-color: ", ";\n    border-color: ", ";\n  }\n"])), colors.hex("primary"), colors.hex("primary"), colors.hover("primary"), colors.hex("primary"));
+
+var QuickSearchPlus = function QuickSearchPlus() {
+  var _useState = useState(""),
+      activeCity = _useState[0],
+      setActiveCity = _useState[1];
+
+  var _useState2 = useState(600000),
+      maxPrice = _useState2[0],
+      setMaxPrice = _useState2[1];
+
+  var validateInputs = function validateInputs(active, max) {
+    if (active) {
+      if (max) {
+        var args = active !== "Any" ? {
+          MinPrice: "0",
+          MinBeds: "1",
+          MinBaths: "1",
+          MinImprovedSqFt: "1",
+          MaxPrice: max ? parseInt(max) : "600000",
+          Locations: active
+        } : {
+          MinPrice: "0",
+          MinBeds: "1",
+          MinBaths: "1",
+          MinImprovedSqFt: "1",
+          MaxPrice: max ? parseInt(max) : "600000"
+        };
+        return args;
+      }
+    }
+
+    return false;
+  };
+
+  var handleMax = function handleMax(e) {
+    setMaxPrice(e.target.value);
+  };
+
+  var handleSubmit = function handleSubmit(e) {
+    e.preventDefault();
+    var isValid = validateInputs(activeCity, maxPrice);
+
+    if (isValid) {
+      var argArr = Object.keys(isValid);
+      var argStr = argArr.reduce(function (acc, val) {
+        return acc + "&" + val + "=" + isValid[val];
+      }, "#&PerformSearch");
+      window.location.href = baseUrl + argStr;
+    }
+  };
+
+  return /*#__PURE__*/React.createElement(Form, {
+    style: {
+      display: "flex"
+    }
+  }, /*#__PURE__*/React.createElement(CityList, {
+    setActiveCity: setActiveCity
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "20px"
+    }
+  }), /*#__PURE__*/React.createElement(Form.Control, {
+    type: "input",
+    placeholder: "Max Price",
+    style: {
+      maxWidth: "400px"
+    },
+    onBlur: handleMax
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: "20px"
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "submit-advanced-wrap"
+  }, /*#__PURE__*/React.createElement(ButtonWrap, {
+    onClick: handleSubmit
+  }, "Submit")));
+};
 
 /** @license React v16.13.1
  * react-is.production.min.js
@@ -240,7 +1933,7 @@ object-assign
 */
 /* eslint-disable no-unused-vars */
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
+var hasOwnProperty$4 = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
 function toObject(val) {
@@ -304,7 +1997,7 @@ var objectAssign = shouldUseNative() ? Object.assign : function (target, source)
 		from = Object(arguments[s]);
 
 		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
+			if (hasOwnProperty$4.call(from, key)) {
 				to[key] = from[key];
 			}
 		}
@@ -1078,277 +2771,92 @@ if (process.env.NODE_ENV !== 'production') {
 }
 });
 
-var getThemePadding = function getThemePadding(base, units) {
-  if (base === void 0) {
-    base = 1;
+var _templateObject$2;
+var HeadingWrap = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n  h1,\n  h2 {\n    color: ", ";\n    text-transform: uppercase;\n    font-size: 8vh;\n    &.center {\n      text-align: center;\n    }\n    &.larger {\n      font-size: 11vh;\n    }\n  }\n"])), colors.hex("primary"));
+
+var HeadingTitle = function HeadingTitle(_ref) {
+  var title = _ref.title,
+      reverse = _ref.reverse,
+      center = _ref.center,
+      larger = _ref.larger,
+      h2 = _ref.h2;
+  var classes = ["font-title"];
+
+  if (reverse) {
+    classes.push("reverse");
   }
 
-  if (units === void 0) {
-    units = "rem";
+  if (center) {
+    classes.push("center");
   }
 
-  var padding = {};
-  var sizes = [{
-    size: "single",
-    value: 1 * base
-  }, {
-    size: "double",
-    value: 2 * base
-  }, {
-    size: "triple",
-    value: 3 * base
-  }, {
-    size: "x4",
-    value: 4 * base
-  }, {
-    size: "half",
-    value: 0.5 * base
-  }, {
-    size: "quarter",
-    value: 0.25 * base
-  }, {
-    size: "eighth",
-    value: 0.125 * base
-  }, {
-    size: "third",
-    value: 1 / 3 * base
-  }, {
-    size: "twoThirds",
-    value: 2 / 3 * base
-  }, {
-    size: "threeQuarters",
-    value: 3 / 4 * base
-  }, {
-    size: "oneAndHalf",
-    value: 1.5 * base
-  }, {
-    size: "theeFifths",
-    value: 3 / 5 * base
-  }, {
-    size: "fourFifths",
-    value: 4 / 5 * base
-  }];
-  sizes.forEach(function (sz) {
-    padding[sz.size] = sz.value;
-  });
-  return {
-    sizes: padding,
-    base: base,
-    units: units
+  if (larger) {
+    classes.push("larger");
+  }
+
+  var Heading = function Heading(_ref2) {
+    var h2 = _ref2.h2,
+        children = _ref2.children,
+        classes = _ref2.classes;
+    return !h2 ? /*#__PURE__*/React.createElement("h1", {
+      className: classes.join(" ")
+    }, children) : /*#__PURE__*/React.createElement("h2", {
+      className: classes.join(" ")
+    }, children);
   };
+
+  return /*#__PURE__*/React.createElement(HeadingWrap, null, /*#__PURE__*/React.createElement(Heading, {
+    classes: classes,
+    h2: h2
+  }, title));
+};
+HeadingTitle.propTypes = {
+  title: propTypes.string.isRequired,
+  reverse: propTypes.bool,
+  center: propTypes.bool,
+  larger: propTypes.bool,
+  h2: propTypes.bool
+};
+HeadingTitle.defaultTypes = {
+  reverse: true,
+  center: false,
+  larger: false,
+  h2: false
 };
 
-var ThemeOptions = /*#__PURE__*/function () {
-  function ThemeOptions(settings) {
-    this.color = settings.color ? settings.color : {};
-    this.transform = settings.transform ? settings.transform : {};
-    this.font = settings.font ? settings.font : {};
-    this.paths = settings.paths ? settings.paths : {};
-    this.padding = settings.padding ? settings.padding : getThemePadding();
-    this.baseUnit = settings.baseUnit ? settings.baseUnit : "rem";
-    this["break"] = settings["break"] ? settings["break"] : {};
-  }
+var _templateObject$3, _templateObject2$1;
+var HeroWrap = styled(Container)(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  padding: 0;\n  margin: 0;\n  position: relative;\n  .bg {\n    .wmk-media-video {\n      height: 45vh;\n    }\n  }\n  .fg {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n  border-bottom: 4px solid ", ";\n  .hidden {\n    display: none;\n  }\n  .flex-center {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n"])), colors.hex("primary"));
 
-  var _proto = ThemeOptions.prototype;
+var HeroSearch = function HeroSearch() {
+  var _useStaticQuery = useStaticQuery(graphql(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n    {\n      options: contentfulGlobal(slug: { eq: \"main\" }) {\n        ...NodeGlobalHomeFields\n      }\n    }\n  "])))),
+      options = _useStaticQuery.options;
 
-  _proto.pad = function pad(size, string) {
-    if (string === void 0) {
-      string = true;
-    }
-
-    return string ? "" + this.padding.sizes[size] * this.padding.base + this.padding.units : "" + this.padding.sizes[size] * this.padding.base;
-  };
-
-  _proto.hexToRgb = function hexToRgb(hex) {
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
-      return r + r + g + g + b + b;
-    });
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
-  };
-
-  _proto.hex = function hex(color) {
-    return this.color[color].hex;
-  };
-
-  _proto.rgb = function rgb(color, string) {
-    if (string === void 0) {
-      string = true;
-    }
-
-    var rgb = this.color[color] && this.color[color].rgb ? this.color[color].rgb : this.hexToRgb(this.color[color].hex);
-    return string ? "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")" : rgb;
-  };
-
-  _proto.alpha = function alpha(color, _alpha, string) {
-    if (_alpha === void 0) {
-      _alpha = 1;
-    }
-
-    if (string === void 0) {
-      string = true;
-    }
-
-    var rgb = this.color[color] ? this.rgb(color, false) : null;
-    var rgba = rgb ? rgb : null;
-
-    if (rgba) {
-      rgba["a"] = _alpha;
-    }
-
-    return string && rgb ? "rgba(" + rgba.r + "," + rgba.g + "," + rgba.b + "," + rgba.a + ")" : rgba;
-  };
-
-  _proto.lightenDarkenColor = function lightenDarkenColor(hex, amt) {
-    var usePound = false;
-
-    if (hex[0] === "#") {
-      hex = hex.slice(1);
-      usePound = true;
-    }
-
-    var num = parseInt(hex, 16);
-    var r = (num >> 16) + amt;
-    if (r > 255) r = 255;else if (r < 0) r = 0;
-    var b = (num >> 8 & 0x00ff) + amt;
-    if (b > 255) b = 255;else if (b < 0) b = 0;
-    var g = (num & 0x0000ff) + amt;
-    if (g > 255) g = 255;else if (g < 0) g = 0;
-    return (usePound ? "#" : "") + (g | b << 8 | r << 16).toString(16);
-  };
-
-  _proto.lighter = function lighter(color, amt) {
-    if (amt === void 0) {
-      amt = 10;
-    }
-
-    return this.color[color] ? this.lightenDarkenColor(this.hex(color), amt) : null;
-  };
-
-  _proto.darker = function darker(color, amt) {
-    if (amt === void 0) {
-      amt = 10;
-    }
-
-    return this.color[color] ? this.lightenDarkenColor(this.hex(color), amt * -1) : null;
-  };
-
-  return ThemeOptions;
-}();
-
-var DefaultTheme = new ThemeOptions({
-  color: {
-    primary: {
-      hex: "#F16724"
-    },
-    secondary: {
-      hex: "#595F67"
-    },
-    tertiary: {
-      hex: "#d0d0d0"
-    },
-    accent: {
-      hex: "##2F2F2F"
-    },
-    white: {
-      hex: "#fefefe"
-    },
-    body: {
-      hex: "#2F2F2F"
-    },
-    black: {
-      hex: "#000000"
-    },
-    gray: {
-      hex: "#595F67"
-    },
-    lightGray: {
-      hex: "#D0D0D0"
-    },
-    orange: {
-      hex: "#F16724"
-    }
-  },
-  paths: {
-    blog: "/blog",
-    home: "/home",
-    tags: "/blog/tag",
-    baseURL: "dev.watermarksmartdesign.com",
-    protocol: "https",
-    contact: "/contact",
-    faq: "/faq",
-    communities: "/community",
-    idx: "//briggsamerican.idxbroker.com/idx/",
-    divSol: "//widgets.diversesolutions.com/Scripts/Dynamic/"
-  },
-  "break": {
-    xs: 576,
-    sm: 768,
-    md: 992,
-    hb: 1275,
-    lg: 1200
-  }
-});
-
-var IDXEmbedScript = React.forwardRef(function (_ref, ref) {
-  var id = _ref.id,
-      type = _ref.type,
-      className = _ref.className,
-      Theme = _ref.Theme;
-  var elId = "idx-jsx-" + type + "-" + id;
-  var embRef = useRef();
-  var classes = [className];
-  classes.push("idx-wrap");
-
-  var empty = function empty(tar) {
-    while (tar.firstChild) {
-      tar.removeChild(tar.firstChild);
-    }
-
-    return tar;
-  };
-
-  useEffect(function () {
-    var tar = embRef.current;
-    var idxScript = document.createElement("script");
-    idxScript.setAttribute("src", Theme.paths.idx + type + ".php?widgetid=" + id);
-    idxScript.setAttribute("charset", "UTF-8");
-    idxScript.setAttribute("type", "text/javascript");
-    idxScript.setAttribute("id", "idxwidgetsrc-" + id);
-    idxScript.setAttribute("async", true);
-    empty(tar);
-    tar.appendChild(idxScript);
-    return function () {
-      return empty(tar);
-    };
-  }, [type, id]);
-  return /*#__PURE__*/React.createElement(Row, {
-    className: "flex-column",
-    ref: ref
-  }, /*#__PURE__*/React.createElement(Col, {
-    id: elId,
-    className: classes.join(" "),
-    ref: embRef
-  }));
-});
-IDXEmbedScript.propTypes = {
-  id: propTypes.number.isRequired,
-  type: propTypes.string.isRequired,
-  className: propTypes.string,
-  Theme: propTypes.object
-};
-IDXEmbedScript.defaultProps = {
-  className: "",
-  Theme: DefaultTheme
+  var companyName = options.companyName,
+      hero = options.hero;
+  var fluid = hero.fluid,
+      file = hero.file;
+  var url = file.url;
+  return /*#__PURE__*/React.createElement(HeroWrap, {
+    fluid: true
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "bg"
+  }, fluid && !url && /*#__PURE__*/React.createElement(Img, {
+    fluid: fluid,
+    alt: companyName
+  }), url && /*#__PURE__*/React.createElement(Video, {
+    url: url
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "fg"
+  }, /*#__PURE__*/React.createElement(Row, {
+    className: "flex-column"
+  }, /*#__PURE__*/React.createElement(Col, null, /*#__PURE__*/React.createElement(HeadingTitle, {
+    title: "Discover",
+    center: true,
+    reverse: true
+  })), /*#__PURE__*/React.createElement(QuickSearchPlus, null))));
 };
 
-var IDX = {};
-IDX.Embed = IDXEmbedScript;
+var IDXHero = HeroSearch;
 
-export { IDX };
+export { IDXHero };
 //# sourceMappingURL=index.modern.js.map
