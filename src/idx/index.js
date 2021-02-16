@@ -1,5 +1,7 @@
-import Embed from "./EmbedScript";
+import HeroSearch from "./DiverseSolutions/HeroSearch/HeroSearch";
+import IDXEmbedScript from "./EmbedScript";
 
 export const IDX = {};
 
-IDX.Embed = Embed;
+IDX.Embed = IDXEmbedScript;
+IDX.Hero = HeroSearch;
