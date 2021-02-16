@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Container, Col, Row } from "react-bootstrap";
+import Loader from "../../../util/Loader";
 import DivSolEmbed from "../DivSolEmbed";
-import Loader from "../../../common/Loader";
 import GridItem, { baseUrl } from "./GridItem";
 
 const DivSolGrid = ({ ssid, city, state }) => {
