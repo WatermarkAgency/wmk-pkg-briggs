@@ -1,6 +1,5 @@
 import React from "react";
 import Img from "gatsby-image";
-import { graphql, useStaticQuery } from "gatsby";
 import { Container, Row, Col } from "react-bootstrap";
 import { Video } from "wmk-lib";
 import styled from "styled-components";
@@ -38,14 +37,7 @@ const HeroWrap = styled(Container)`
   }
 `;
 
-const HeroSearch = () => {
-  const { options } = useStaticQuery(graphql`
-    {
-      options: contentfulGlobal(slug: { eq: "main" }) {
-        ...NodeGlobalHomeFields
-      }
-    }
-  `);
+const HeroSearch = ({ options }) => {
   const { companyName, hero } = options;
   const { fluid, file } = hero;
   const { url } = file;
