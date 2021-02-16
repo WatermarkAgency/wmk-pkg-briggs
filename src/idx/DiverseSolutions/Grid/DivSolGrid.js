@@ -84,7 +84,7 @@ const DivSolGrid = ({ ssid, city, state }) => {
   }, [setGridData]);
   const grids = Object.keys(gridData).map((key) => gridData[key]);
   return (
-    <>
+    <React.Fragment>
       <div style={{ display: "none" }}>
         <DivSolEmbed
           ref={gridRef}
@@ -126,7 +126,7 @@ const DivSolGrid = ({ ssid, city, state }) => {
       ) : (
         <Loader />
       )}
-    </>
+    </React.Fragment>
   );
 };
 
