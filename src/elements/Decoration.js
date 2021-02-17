@@ -2,6 +2,7 @@ import React from "react";
 import Img from "gatsby-image";
 import styled from "styled-components";
 import DefaultTheme from "../util/ThemeOptions";
+import PropTypes from "prop-types";
 
 const Wrap = styled.div`
   ${({ block }) =>
@@ -36,10 +37,23 @@ const Wrap = styled.div`
   `}
 `;
 
-export default ({ fluid, block, alt }) => {
+const Decoration = ({ fluid, block, alt }) => {
   return fluid ? (
     <Wrap block={block}>
       <Img fluid={fluid} alt={alt} />
     </Wrap>
   ) : null;
+};
+
+export default Decoration;
+
+Decoration.propTyps = {
+  fluid: PropTypes.object.isRequired,
+  block: PropTypes.bool,
+  alt: PropTypes.string,
+};
+
+Decoration.defaultProps = {
+  block: false,
+  alt: "",
 };
