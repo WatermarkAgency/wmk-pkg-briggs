@@ -18,7 +18,7 @@ const HeadingWrap = styled.div`
   }
 `;
 
-const HeadingTitle = ({ title, reverse, center, larger, h2 }) => {
+const HeadingTitle = ({ title, reverse, center, larger, h2, children }) => {
   const classes = ["font-title"];
   if (reverse) {
     classes.push("reverse");
@@ -32,13 +32,13 @@ const HeadingTitle = ({ title, reverse, center, larger, h2 }) => {
   const Heading = ({h2, children, classes}) => {
     return !h2 ? <h1 className={classes.join(" ")}>{children}</h1> : <h2 className={classes.join(" ")}>{children}</h2>
   }
-  return <HeadingWrap><Heading classes={classes} h2={h2}>{title}</Heading></HeadingWrap>;
+  return <HeadingWrap><Heading classes={classes} h2={h2}>{title || children}</Heading></HeadingWrap>;
 };
 
 export default HeadingTitle;
 
 HeadingTitle.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   reverse: PropTypes.bool,
   center: PropTypes.bool,
   larger: PropTypes.bool,

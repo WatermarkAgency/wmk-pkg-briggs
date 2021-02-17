@@ -10,14 +10,14 @@ const SubWrap = styled.h3`
   }
 `;
 
-const HeadingSub = ({ sub, centered }) => {
-  return <SubWrap className={centered ? "centered" : ""}>{sub}</SubWrap>;
+const HeadingSub = ({ sub, centered, children }) => {
+  return <SubWrap className={centered ? "centered" : ""}>{sub || children}</SubWrap>;
 };
 
 export default HeadingSub;
 
 HeadingSub.propTypes = {
-  sub: PropTypes.string.isRequired,
+  sub: PropTypes.string,
   centered: PropTypes.bool
 };
 
