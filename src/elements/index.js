@@ -1,5 +1,5 @@
-// import Decoration from "./Decoration";
-// import PageHero from "./Hero/PageHero";
+import Decoration from "./Decoration";
+import PageHero from "./Hero/PageHero";
 
-// export const PageHero = PageHero;
-// export const Decoration = Decoration;
+export const PageHero = PageHero;
+export const Decoration = Decoration;
