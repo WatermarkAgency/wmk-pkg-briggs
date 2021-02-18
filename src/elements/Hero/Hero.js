@@ -3,9 +3,9 @@ import Img from "gatsby-image";
 import { Container, Row, Col } from "react-bootstrap";
 import { Video } from "wmk-lib";
 import styled from "styled-components";
-import QuickSearchPlus from "../Search/QuickSearchPlus";
-import { colors } from "../../../util/palette";
-import HeadingTitle from "../../../typography/HeadingTitle";
+import QuickSearchPlus from "../../idx/DiverseSolutions/Search/QuickSearchPlus";
+import { colors } from "../../util/palette";
+import HeadingTitle from "../../typography/HeadingTitle";
 
 const HeroWrap = styled(Container)`
   padding: 0;
