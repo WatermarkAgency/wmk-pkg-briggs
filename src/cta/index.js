@@ -1,4 +1,4 @@
 import PageHero from "../elements/Hero/PageHero";
-import PageCTA from "./PageCTA";
+import PgCTA from "./PageCTA";
 
-export const PageCTA = PageCTA;
+export const PageCTA = PgCTA;

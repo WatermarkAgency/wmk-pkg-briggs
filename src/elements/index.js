@@ -1,5 +1,5 @@
-import Decoration from "./Decoration";
-import PageHero from "./Hero/PageHero";
+import Decor from "./Decoration";
+import PgHero from "./Hero/PageHero";
 
-export const PageHero = PageHero;
-export const Decoration = Decoration;
+export const PageHero = PgHero;
+export const Decoration = Decor;

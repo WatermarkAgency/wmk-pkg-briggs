@@ -1,5 +1,5 @@
-import IDXGrid from "./DiverseSolutions/Grid/DivSolGrid";
-import IDXHero from "../elements/Hero/Hero";
+import Grid from "./DiverseSolutions/Grid/DivSolGrid";
+import Hero from "../elements/Hero/Hero";
 
-export const IDXGrid = IDXGrid;
-export const IDXHero = IDXHero;
+export const IDXGrid = Grid;
+export const IDXHero = Hero;
