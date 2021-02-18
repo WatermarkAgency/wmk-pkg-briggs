@@ -2,11 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import Img from "gatsby-image";
 import PropTypes from "prop-types";
+import get from "lodash/get";
+import Decoration from "../Decoration";
+import RolloverHero from "./Rollover/RolloverHero";
+import Theme from "../../util/ThemeOptions";
 import { colors } from "../../util/palette";
 import H1 from "../../typography/HeadingTitle";
-import Decoration from "../Decoration";
-import get from "lodash/get";
-import Theme from "../../util/ThemeOptions";
 
 const Wrap = styled.div`
   position: relative;
@@ -46,31 +47,36 @@ const Wrap = styled.div`
   }
 `;
 
-const PageHero = ({ bgImage, title, decoration, hideTitle }) => {
+const PageHero = ({ bgImage, title, decoration, hideTitle, rollover }) => {
   const bg = get(bgImage, "fluid");
   const decor = get(decoration, "fluid");
   const alt = get(decoration, "alt");
   return (
-    <Wrap>
-      {bg && (
-        <div className="bg-image-wrap">
-          <Img fluid={bg} alt={get(bgImage, "title", "")} />
-        </div>
-      )}
-      {title && !hideTitle ? (
-        <H1 reverse center>
-          {title}
-        </H1>
+    <React.Fragment>
+      {bg ? (
+        <Wrap>
+          {
+            <div className="bg-image-wrap">
+              <Img fluid={bg} alt={get(bgImage, "title", "")} />
+            </div>
+          }
+          {title && !hideTitle ? (
+            <H1 reverse center>
+              {title}
+            </H1>
+          ) : null}
+          <Decoration fluid={decor} alt={alt} />
+        </Wrap>
       ) : null}
-      <Decoration fluid={decor} alt={alt} />
-    </Wrap>
+      <RolloverHero block={get(rollover, "[0]")} />
+    </React.Fragment>
   );
 };
 
 export default PageHero;
 
 PageHero.propTypes = {
-  bgImage: PropTypes.object.isRequired,
+  bgImage: PropTypes.object,
   title: PropTypes.string,
   mountains: PropTypes.bool,
   hideTitle: PropTypes.bool,
