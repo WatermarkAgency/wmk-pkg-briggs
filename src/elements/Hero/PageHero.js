@@ -68,7 +68,7 @@ const PageHero = ({ bgImage, title, decoration, hideTitle, rollover }) => {
           <Decoration fluid={decor} alt={alt} />
         </Wrap>
       ) : null}
-      <RolloverHero block={get(rollover, "[0]")} />
+      {rollover ? <RolloverHero block={get(rollover, "[0]")} /> : null}
     </React.Fragment>
   );
 };
