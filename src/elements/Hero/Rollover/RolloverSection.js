@@ -11,7 +11,7 @@ const WrapCol = styled(Col)`
   height: 100%;
   color: ${colors.hex("white")};
   padding: 0;
-  .content-wrap {
+  .rollover__content {
     opacity: 0;
     display: flex;
     flex-direction: column;
@@ -29,7 +29,7 @@ const WrapCol = styled(Col)`
     }
   }
   :hover {
-    .content-wrap {
+    .rollover__content {
       opacity: 1;
       transition: opacity 0.25s ease;
     }
@@ -59,8 +59,8 @@ const BGWrap = styled.div`
 const RolloverSection = ({ content }) => {
   // console.log("content: ", content)
   return (
-    <WrapCol sm={12} md={4} className="rollover">
-      <div className="content-wrap">
+    <WrapCol sm={12} md={4} className="rollover__wrap">
+      <div className="rollover__content">
         <H1 center h2 reverse>
           {get(content, "title")}
         </H1>

@@ -4,8 +4,8 @@ import RolloverSection from "./RolloverSection";
 import { Container, Row } from "react-bootstrap";
 import get from "lodash/get";
 import Theme from "../../../util/ThemeOptions";
-import { IDXGrid, IDXWrap } from "../../../idx";
 import H2 from "../../../typography/HeadingMain";
+import { IDXGrid, IDXWrap } from "../../../idx";
 
 const WrapCont = styled(Container)`
   position: relative;
@@ -34,12 +34,12 @@ const WrapCont = styled(Container)`
     height: 188px;
     margin-bottom: 50px !important;
     .row {
-      .rollover {
-        .content-wrap {
+      .rollover__wrap {
+        .rollover__content {
           opacity: 1;
         }
       }
-      & > .rollover:not(:first-child) {
+      & > .rollover__wrap:not(:first-child) {
         display: none;
       }
     }
@@ -50,7 +50,8 @@ const WrapCont = styled(Container)`
 `;
 
 const RolloverHero = ({ block, grid }) => {
-  console.log("block:", block);
+  const blockType = get(block, "__typename");
+  const isRollover = blockType === "ContentfulBlockRolloverHero";
   const section1 = {
     title: get(block, "section1Title"),
     copy: get(block, "section1Copy"),
@@ -67,7 +68,7 @@ const RolloverHero = ({ block, grid }) => {
     image: get(block, "section3Image"),
   };
 
-  return block ? (
+  return isRollover ? (
     <React.Fragment>
       <WrapCont fluid>
         <Row>

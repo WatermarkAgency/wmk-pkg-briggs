@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Img from "gatsby-image";
 import PropTypes from "prop-types";
 import get from "lodash/get";
-import Decoration from "../Decoration";
 import RolloverHero from "./Rollover/RolloverHero";
 import Theme from "../../util/ThemeOptions";
 import { colors } from "../../util/palette";
+import Decoration from "../Decoration";
 import H1 from "../../typography/HeadingTitle";
 
 const Wrap = styled.div`
