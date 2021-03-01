@@ -12,6 +12,13 @@ const CTAWrap = styled(Container)`
     rgba(254, 70, 70, 1) 100%
   );
   padding: 4vh 0;
+  :hover {
+    background: linear-gradient(
+      -180180deg,
+      rgba(241, 103, 36, 1) 0%,
+      rgba(254, 70, 70, 1) 100%
+    );
+  }
 `;
 
 const Prompt = styled(Col)`
@@ -23,21 +30,25 @@ const Prompt = styled(Col)`
 const CTA = styled(Col)`
   text-align: right;
   padding-right: 2rem;
-  .wmk-link {
-    position: relative;
-    top: 0.5vh;
-    color: ${colors.hex("white")};
-    background: ${colors.hex("black")};
-    box-shadow: 0px 3px 6px ${colors.rgba("black", 0.25)};
-    padding: 1vh 2vh;
-    border-radius: 0.75vh;
-    text-decoration: none;
+  }
+`;
+
+const CTAButton = styled(WMKLink)`
+  position: relative;
+  top: 0.5vh;
+  color: ${colors.hex("white")};
+  background: ${colors.hex("black")};
+  box-shadow: 0px 3px 6px ${colors.rgba("black", 0.25)};
+  padding: 2vh 4vh;
+  border-radius: 0.75vh;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 3vh;
+  :hover {
+    background: ${colors.hex("white")};
+    color: ${colors.hex("black")};
     transition: all 0.3s ease;
-    :hover {
-      background: ${colors.hex("white")};
-      color: ${colors.hex("primary")};
-      transition: all 0.3s ease;
-    }
+    text-decoration: none;
   }
 `;
 
@@ -53,9 +64,9 @@ const PageCTA = ({ to, target, prompt, cta }) => {
           </Prompt>
           <CTA>
             <div className="animate__animated animate__backInRight">
-              <WMKLink to={to} target={target}>
+              <CTAButton to={to} target={target}>
                 {cta}
-              </WMKLink>
+              </CTAButton>
             </div>
           </CTA>
         </Row>
