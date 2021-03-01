@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MainLayout, FlexSpacer, Video } from "wmk-lib";
+import { MainLayout, FlexSpacer } from "wmk-lib";
 import "wmk-lib/dist/index.css";
 
 const App = () => {

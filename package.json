@@ -1,6 +1,6 @@
 {
   "name": "wmk-pkg-briggs",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "WMK Briggs American Shared Components",
   "author": "WatermarkAgency",
   "license": "MIT",
@@ -27,7 +27,6 @@
     "react": "^16.0.0"
   },
   "devDependencies": {
-    "microbundle-crl": "^0.13.8",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
@@ -41,6 +40,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
+    "microbundle-crl": "^0.13.8",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
     "react": "^16.13.1",
@@ -51,12 +51,14 @@
     "dist"
   ],
   "dependencies": {
-    "@n8tb1t/use-scroll-position": "^1.0.43",
-    "gatsby": "^2.20.12",
-    "gatsby-image": "^2.3.1",
-    "prop-types": "^15.7.2",
-    "react-helmet": "^6.0.0",
-    "react-icons": "^3.9.0",
-    "video-react": "^0.14.1"
+    "animate.css": "^4.1.1",
+    "bootstrap": "^4.6.0",
+    "gatsby": "^2.32.3",
+    "gatsby-image": "^2.11.0",
+    "react-bootstrap": "^1.4.3",
+    "react-icons": "^3.11.0",
+    "styled-components": "^4.4.1",
+    "wmk-color-palette": "^0.1.6",
+    "wmk-lib": "^1.23.0"
   }
 }
