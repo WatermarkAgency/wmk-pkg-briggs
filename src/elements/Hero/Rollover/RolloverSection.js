@@ -54,7 +54,7 @@ const BGWrap = styled.div`
   .gatsby-image-wrapper {
     height: 100%;
     img {
-      object-position: center 25%;
+      object-position: center 35%;
     }
   }
 `;
